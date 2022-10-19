@@ -45,3 +45,28 @@ const readDirectory = async () => {
 };
 
 readDirectory();
+
+// Buffer
+
+fs.readFile("readme.md")
+  .then((data) => {
+    //Buffer
+    const string = data.toString();
+    console.log(string);
+  })
+  .catch((err) => {
+    console.log('ERROR -> '+err.message);
+  });
+
+// read object
+
+  fs.readFile("./db/contacts.json")
+    .then((data) => {
+      //Buffer
+        const string = data.toString();
+        const object = JSON.parse(string)
+      console.log(object[0].name);
+    })
+    .catch((err) => {
+      console.log("ERROR -> " + err.message);
+    });
