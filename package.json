@@ -4,17 +4,27 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index",
+    "start:dev": "nodemon index"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/PawelPalasinski/goit-node-hw-01.git"
   },
   "keywords": [],
-  "author": "Pawel Palasinski",
+  "author": "Pawel Palasinski <pawel.palasinski@gmail.com>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/PawelPalasinski/goit-node-hw-01/issues"
   },
-  "homepage": "https://github.com/PawelPalasinski/goit-node-hw-01#readme"
+  "homepage": "https://github.com/PawelPalasinski/goit-node-hw-01#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  },
+  "dependencies": {
+    "colors": "^1.4.0",
+    "commander": "^9.4.1",
+    "nanoid": "^4.0.0"
+  }
 }

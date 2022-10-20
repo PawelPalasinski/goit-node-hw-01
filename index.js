@@ -1,72 +1,40 @@
-console.log("działa");
-console.log(__filename);
+const { Command } = require("commander");
+const program = new Command();
 
-// FS - read files
+require("colors");
 
-const fs = require("fs").promises;
+program
+  .option("-a, --action <type>", "choose action")
+  .option("-i, --id <type>", "user id")
+  .option("-n, --name <type>", "user name")
+  .option("-e, --email <type>", "user email")
+  .option("-p, --phone <type>", "user phone");
 
-// old syntax
+program.parse(process.argv);
 
-// fs.readdir(__dirname)
-//   .then((files) => {
-//     console.log(files);
-//     return Promise.all(
-//       files.map(async (filename) => {
-//         const stats = await fs.stat(filename);
-//         return {
-//           name: filename,
-//           size: stats.size,
-//           date: stats.mtime,
-//           isFolder: stats.isDirectory(),
-//         };
-//       })
-//     );
-//   })
-//   .then((result) => {
-//     console.table(result);
-//   });
+const argv = program.opts();
 
-// new syntax
+const invokeAction = ({ action, id, name, email, phone }) => {
+  switch (action) {
+    case "list":
+      // ...
+      break;
 
-const readDirectory = async () => {
-  const files = await fs.readdir(__dirname);
-  const filesStats = await Promise.all(
-    files.map(async (filename) => {
-      const stats = await fs.stat(filename);
-      return {
-        name: filename,
-        size: stats.size,
-        date: stats.mtime,
-        isFolder: stats.isDirectory(),
-      };
-    })
-  );
-  console.table(filesStats);
+    case "get":
+      // ... id
+      break;
+
+    case "add":
+      // ... name email phone
+      break;
+
+    case "remove":
+      // ... id
+      break;
+
+    default:
+      console.warn("\x1B[31m Unknown action type!");
+  }
 };
 
-readDirectory();
-
-// Buffer
-
-fs.readFile("readme.md")
-  .then((data) => {
-    //Buffer
-    const string = data.toString();
-    console.log(string);
-  })
-  .catch((err) => {
-    console.log('ERROR -> '+err.message);
-  });
-
-// read object
-
-  fs.readFile("./db/contacts.json")
-    .then((data) => {
-      //Buffer
-        const string = data.toString();
-        const object = JSON.parse(string)
-      console.log(object[0].name);
-    })
-    .catch((err) => {
-      console.log("ERROR -> " + err.message);
-    });
+invokeAction(argv);
