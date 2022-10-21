@@ -3,6 +3,13 @@ const program = new Command();
 
 require("colors");
 
+const {
+  listContacts,
+  getContactsById,
+  removeContact,
+  addContact,
+} = require("./contacts");
+
 program
   .option("-a, --action <type>", "choose action")
   .option("-i, --id <type>", "user id")
@@ -12,12 +19,16 @@ program
 
 program.parse(process.argv);
 
+console.log('działa'.yellow)
+
 const argv = program.opts();
 
-const invokeAction = ({ action, id, name, email, phone }) => {
+const invokeAction = async ({ action, id, name, email, phone }) => {
   switch (action) {
     case "list":
-      // ...
+            const contacts = await listContacts();
+            console.log("Contact list:".green);
+            console.table(contacts);
       break;
 
     case "get":
