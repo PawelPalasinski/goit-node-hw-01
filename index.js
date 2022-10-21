@@ -1,13 +1,15 @@
 const { Command } = require("commander");
 const program = new Command();
+const { nanoid } = require("nanoid");
+console.log(nonoid());
 
 require("colors");
 
 const {
   listContacts,
-  getContactsById,
-  removeContact,
+  getContactById,
   addContact,
+  removeContact,
 } = require("./contacts");
 
 program
@@ -19,28 +21,24 @@ program
 
 program.parse(process.argv);
 
-console.log('działa'.yellow)
-
 const argv = program.opts();
 
 const invokeAction = async ({ action, id, name, email, phone }) => {
   switch (action) {
     case "list":
-            const contacts = await listContacts();
-            console.log("Contact list:".green);
-            console.table(contacts);
+      return console.table(await listContacts());
       break;
 
     case "get":
-      // ... id
+      return console.table(await getContactById(id));
       break;
 
     case "add":
-      // ... name email phone
+      return console.table(await addContact(name, email, phone));
       break;
 
     case "remove":
-      // ... id
+      return console.table(await removeContact(id));
       break;
 
     default:
