@@ -18,8 +18,8 @@ const listContacts = async () => {
 // Find contact by id: node index.js --action get --id 5
 
 const getContactById = async (id) => {
-  const contacts = await listContacts();
-  const contact = contacts.find((item) => String(item.id) === String(id));
+  const contactsArr = await listContacts();
+  const contact = contactsArr.find(element => element.id === id);
   if (!contact) {
     return null;
   }
@@ -30,7 +30,7 @@ const getContactById = async (id) => {
 
 const addContact = async (name, email, phone) => {
   try {
-    const contacts = await listContacts();
+    const contactsArr = await listContacts();
 
     const newContact = {
       id: nanoid(),
@@ -39,12 +39,12 @@ const addContact = async (name, email, phone) => {
       phone,
     };
 
-    contacts.push(newContact);
-    console.log("++", contactsPath);
-    await fs.writeFile(contactsPath, JSON.stringify(contacts));
-    console.table(contacts);
+    contactsArr.push(newContact);
+    await fs.writeFile(contactsPath, JSON.stringify(contactsArr));
+    console.table(contactsArr);
+    console.log('Contact: '.blue + name.yellow + ' was added to contacts'.blue);
   } catch (error) {
-    console.log(error);
+    console.log(error.red);
   }
 };
 
@@ -52,17 +52,17 @@ const addContact = async (name, email, phone) => {
 
 const removeContact = async (id) => {
   try {
-    const contacts = await getAll();
-    const itemIndex = contacts.findIndex((item) => item.id.toString() === id);
+    const contactsArr = await listContacts();
+    const itemIndex = contactsArr.findIndex(element => element.id === id);
     if (itemIndex === -1) {
       return null;
     }
-    contacts.splice(itemIndex, 1);
-    await fs.writeFile(contactsPath, JSON.stringify(contacts));
-    console.table(contacts);
-    return "Success remove";
+    contactsArr.splice(itemIndex, 1);
+    await fs.writeFile(contactsPath, JSON.stringify(contactsArr));
+    console.table(contactsArr);
+    return console.log('Contact with id: '.blue + id.yellow + ' was removed'.blue);
   } catch (error) {
-    console.log(error);
+    console.log(error.red);
   }
 };
 
