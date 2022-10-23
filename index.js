@@ -1,9 +1,10 @@
 const { Command } = require("commander");
 const program = new Command();
-const { nanoid } = require("nanoid");
-console.log(nonoid());
+const nanoid = require("nanoid");
 
 require("colors");
+
+console.log("działa dziś");
 
 const {
   listContacts,

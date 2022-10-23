@@ -2,12 +2,9 @@ const fs = require("fs").promises;
 const path = require("path");
 const { nanoid } = require("nanoid");
 
-
-
-
 const contactsPath = path.resolve("./db/contacts.json");
 
-// Get all contacts
+// Get all contacts: node index.js --action list
 
 const listContacts = async () => {
   try {
@@ -18,7 +15,7 @@ const listContacts = async () => {
   }
 };
 
-// Find contact by id
+// Find contact by id: node index.js --action get --id 5
 
 const getContactById = async (id) => {
   const contacts = await listContacts();
@@ -29,27 +26,7 @@ const getContactById = async (id) => {
   return contact;
 };
 
-// Remove contact using id
-
-const removeContact = async (id) => {
-
-  try {
-    const contacts = await getAll();
-    const itemIndex = contacts.findIndex((item) => item.id.toString() === id);
-    if (itemIndex === -1) {
-      return null;
-    }
-    contacts.splice(itemIndex, 1);
-    await fs.writeFile(contactsPath, JSON.stringify(contacts));
-    console.table(contacts);
-    return "Success remove";
-  } catch (error) {
-    console.log(error);
-  }
-
-};
-
-// Add new contact
+// Add new contact: node index.js --action add --name Mango --email mango@gmail.com --phone 322-22-22
 
 const addContact = async (name, email, phone) => {
   try {
@@ -66,7 +43,24 @@ const addContact = async (name, email, phone) => {
     console.log("++", contactsPath);
     await fs.writeFile(contactsPath, JSON.stringify(contacts));
     console.table(contacts);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
+// Remove contact using id: node index.js --action remove --id 3
+
+const removeContact = async (id) => {
+  try {
+    const contacts = await getAll();
+    const itemIndex = contacts.findIndex((item) => item.id.toString() === id);
+    if (itemIndex === -1) {
+      return null;
+    }
+    contacts.splice(itemIndex, 1);
+    await fs.writeFile(contactsPath, JSON.stringify(contacts));
+    console.table(contacts);
+    return "Success remove";
   } catch (error) {
     console.log(error);
   }
@@ -75,6 +69,6 @@ const addContact = async (name, email, phone) => {
 module.exports = {
   listContacts,
   getContactById,
-  removeContact,
   addContact,
+  removeContact,
 };
